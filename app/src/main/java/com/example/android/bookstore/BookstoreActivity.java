@@ -120,7 +120,6 @@ public class BookstoreActivity extends AppCompatActivity {
         values.put(BookEntry.COLUMN_BOOK_QUANTITY, quantity);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER, mSupplierNameEditText.getText().toString().trim());
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE, mSupplierPhoneEditText.getText().toString().trim());
-// Insert the new row, returning the primary key value of the new row
         db.insert(BookEntry.TABLE_NAME, null, values);
     }
 }
