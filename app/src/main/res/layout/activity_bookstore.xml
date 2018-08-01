@@ -1,18 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BookstoreActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+        <LinearLayout
+            android:background="@color/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <!-- Label -->
+                <EditText
+                    android:id="@+id/product_name"
+                    style="@style/normal"
+                    android:hint="@string/product_name"
+                    android:inputType="text" />
+
+                <EditText
+                    android:id="@+id/price"
+                    style="@style/normal"
+                    android:hint="@string/price"
+                    android:inputType="number" />
+
+                <EditText
+                    android:id="@+id/quantity"
+                    style="@style/normal"
+                    android:hint="@string/quantity"
+                    android:inputType="text" />
+
+                <EditText
+                    android:id="@+id/supplier_name"
+                    style="@style/normal"
+                    android:hint="@string/supplier_name"
+                    android:inputType="text" />
+
+                <EditText
+                    android:id="@+id/supplier_phone"
+                    style="@style/normal"
+                    android:hint="@string/supplier_phone_number"
+                    android:inputType="phone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/insert_book"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/margin_button"
+                    android:background="@color/button"
+                    android:text="@string/insert_book"
+                    android:textSize="30sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/inventory"
+            style="@style/normal"
+            android:background="@android:color/holo_red_light"
+            android:textColor="@android:color/black"
+            tools:text="Mariangiongiangela!" />
+    </LinearLayout>
+
+</ScrollView>

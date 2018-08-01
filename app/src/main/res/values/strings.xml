@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">bookstore</string>
+    <string name="shelf">The Shelf contains</string>
+    <string name="books">books.</string>
+    <string name="product_name">product name</string>
+    <string name="price">price</string>
+    <string name="quantity">quantity</string>
+    <string name="supplier_name">supplier name</string>
+    <string name="supplier_phone_number">supplier phone number</string>
+    <string name="insert_book">insert book</string>
+
 </resources>
