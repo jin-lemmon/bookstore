@@ -6,24 +6,35 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 
 public class DetailActivity extends AppCompatActivity {
+
+    private EditText mNameEditText;
+    private EditText mPriceEditText;
+    private EditText mQuantityEditText;
+    private EditText mSupplierNameEditText;
+    private EditText mSupplierPhoneEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mNameEditText = findViewById(R.id.product_name);
+        mPriceEditText = findViewById(R.id.price);
+        mQuantityEditText = findViewById(R.id.quantity);
+        mSupplierNameEditText = findViewById(R.id.supplier_name);
+        mSupplierPhoneEditText = findViewById(R.id.supplier_phone);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
+    private void eraseText() {
+        mNameEditText.setText("");
+        mPriceEditText.setText("");
+        mQuantityEditText.setText("");
+        mSupplierNameEditText.setText("");
+        mSupplierPhoneEditText.setText("");
+    }
 }
+
+

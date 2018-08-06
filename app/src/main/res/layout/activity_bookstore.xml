@@ -16,43 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:orientation="vertical">
 
-                <!-- Label -->
-                <EditText
-                    android:id="@+id/product_name"
-                    style="@style/normal"
-                    android:hint="@string/product_name"
-                    android:inputType="text" />
-
-                <EditText
-                    android:id="@+id/price"
-                    style="@style/normal"
-                    android:hint="@string/price"
-                    android:inputType="numberDecimal" />
-
-                <EditText
-                    android:id="@+id/quantity"
-                    style="@style/normal"
-                    android:hint="@string/quantity"
-                    android:inputType="number" />
-
-                <EditText
-                    android:id="@+id/supplier_name"
-                    style="@style/normal"
-                    android:hint="@string/supplier_name"
-                    android:inputType="text" />
-
-                <EditText
-                    android:id="@+id/supplier_phone"
-                    style="@style/normal"
-                    android:hint="@string/supplier_phone_number"
-                    android:inputType="phone" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -70,12 +34,11 @@
             </LinearLayout>
         </LinearLayout>
 
-        <TextView
+        <ListView
             android:id="@+id/inventory"
             style="@style/normal"
             android:background="@android:color/holo_red_light"
-            android:textColor="@android:color/black"
-            tools:text="Mariangiongiangela!" />
+            android:textColor="@android:color/black"/>
     </LinearLayout>
 
 </ScrollView>

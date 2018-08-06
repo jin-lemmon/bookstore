@@ -1,6 +1,7 @@
 package com.example.android.bookstore;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -29,18 +30,14 @@ public class BookstoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookstore);
         mDbHelper = new BookDbHelper(this);
-        mNameEditText = findViewById(R.id.product_name);
-        mPriceEditText = findViewById(R.id.price);
-        mQuantityEditText = findViewById(R.id.quantity);
-        mSupplierNameEditText = findViewById(R.id.supplier_name);
-        mSupplierPhoneEditText = findViewById(R.id.supplier_phone);
+
         Button insertBookButton = findViewById(R.id.insert_book);
         insertBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                insertBook();
-                eraseText();
-                shelfInfo();
+                Intent intent =new Intent(BookstoreActivity.this,DetailActivity.class);
+                Toast.makeText(BookstoreActivity.this,"Inserting New Book",Toast.LENGTH_SHORT).show();
+                startActivity(intent);
             }
         });
         shelfInfo();
@@ -51,13 +48,7 @@ public class BookstoreActivity extends AppCompatActivity {
         shelfInfo();
     }
 
-    private void eraseText() {
-        mNameEditText.setText("");
-        mPriceEditText.setText("");
-        mQuantityEditText.setText("");
-        mSupplierNameEditText.setText("");
-        mSupplierPhoneEditText.setText("");
-    }
+
 
     private void shelfInfo() {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
