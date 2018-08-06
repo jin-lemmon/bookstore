@@ -33,13 +33,13 @@
                     android:id="@+id/price"
                     style="@style/normal"
                     android:hint="@string/price"
-                    android:inputType="number" />
+                    android:inputType="numberDecimal" />
 
                 <EditText
                     android:id="@+id/quantity"
                     style="@style/normal"
                     android:hint="@string/quantity"
-                    android:inputType="text" />
+                    android:inputType="number" />
 
                 <EditText
                     android:id="@+id/supplier_name"

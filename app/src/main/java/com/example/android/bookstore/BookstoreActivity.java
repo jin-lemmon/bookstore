@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.bookstore.data.BookContract.BookEntry;
 import com.example.android.bookstore.data.BookDbHelper;
@@ -21,7 +22,6 @@ public class BookstoreActivity extends AppCompatActivity {
     private EditText mQuantityEditText;
     private EditText mSupplierNameEditText;
     private EditText mSupplierPhoneEditText;
-    private TextView mInventory;
 
 
     @Override
@@ -34,7 +34,6 @@ public class BookstoreActivity extends AppCompatActivity {
         mQuantityEditText = findViewById(R.id.quantity);
         mSupplierNameEditText = findViewById(R.id.supplier_name);
         mSupplierPhoneEditText = findViewById(R.id.supplier_phone);
-        mInventory = findViewById(R.id.inventory);
         Button insertBookButton = findViewById(R.id.insert_book);
         insertBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,9 +49,9 @@ public class BookstoreActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         shelfInfo();
-            }
+    }
 
-    private void eraseText(){
+    private void eraseText() {
         mNameEditText.setText("");
         mPriceEditText.setText("");
         mQuantityEditText.setText("");
@@ -76,9 +75,9 @@ public class BookstoreActivity extends AppCompatActivity {
                 null,
                 null);
         try {
-            TextView InventoryView = findViewById(R.id.inventory);
-            InventoryView.setText("the shelf contains " + cursor.getCount() + "titles\n\n");
-            InventoryView.append(BookEntry._ID + " - "
+            TextView mInventory = findViewById(R.id.inventory);
+            mInventory.setText("the shelf contains " + cursor.getCount() + "titles\n\n");
+            mInventory.append(BookEntry._ID + " - "
                     + BookEntry.COLUMN_BOOK_PRODUCT_NAME + " - "
                     + BookEntry.COLUMN_BOOK_PRICE + " - "
                     + BookEntry.COLUMN_BOOK_QUANTITY + " - "
@@ -97,7 +96,7 @@ public class BookstoreActivity extends AppCompatActivity {
                 int currentPrice = cursor.getInt(priceColumnIndex);
                 String currentSupplierName = cursor.getString(supplierNameColumnIndex);
                 String currentSupplierPhone = cursor.getString(supplierPhoneColumnIndex);
-                InventoryView.append(("\n" + currentID +
+                mInventory.append(("\n" + currentID +
                         " - " + currentProductName +
                         " - " + currentQuantity +
                         " - " + currentPrice +
@@ -110,16 +109,20 @@ public class BookstoreActivity extends AppCompatActivity {
     }
 
     private void insertBook() {
-        int price = Integer.parseInt(mPriceEditText.getText().toString().trim());
-        int quantity = Integer.parseInt(mQuantityEditText.getText().toString().trim());
-        BookDbHelper mDbHelper = new BookDbHelper(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(BookEntry.COLUMN_BOOK_PRODUCT_NAME, mNameEditText.getText().toString().trim());
-        values.put(BookEntry.COLUMN_BOOK_PRICE, price);
-        values.put(BookEntry.COLUMN_BOOK_QUANTITY, quantity);
-        values.put(BookEntry.COLUMN_BOOK_SUPPLIER, mSupplierNameEditText.getText().toString().trim());
-        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE, mSupplierPhoneEditText.getText().toString().trim());
-        db.insert(BookEntry.TABLE_NAME, null, values);
+        if (mPriceEditText != null && mQuantityEditText != null) {
+            int price = Integer.parseInt(mPriceEditText.getText().toString().trim());
+            int quantity = Integer.parseInt(mQuantityEditText.getText().toString().trim());
+            BookDbHelper mDbHelper = new BookDbHelper(this);
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(BookEntry.COLUMN_BOOK_PRODUCT_NAME, mNameEditText.getText().toString().trim());
+            values.put(BookEntry.COLUMN_BOOK_PRICE, price);
+            values.put(BookEntry.COLUMN_BOOK_QUANTITY, quantity);
+            values.put(BookEntry.COLUMN_BOOK_SUPPLIER, mSupplierNameEditText.getText().toString().trim());
+            values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE, mSupplierPhoneEditText.getText().toString().trim());
+            db.insert(BookEntry.TABLE_NAME, null, values);
+        }else{
+            Toast.makeText(this,"missing fields",Toast.LENGTH_SHORT).show();
+        }
     }
 }

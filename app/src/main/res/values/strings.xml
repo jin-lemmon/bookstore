@@ -8,5 +8,7 @@
     <string name="supplier_name">supplier name</string>
     <string name="supplier_phone_number">supplier phone number</string>
     <string name="insert_book">insert book</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_detail">DetailActivity</string>
 
 </resources>
