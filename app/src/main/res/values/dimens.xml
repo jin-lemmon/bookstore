@@ -4,4 +4,8 @@
     <dimen name="padding">10dp</dimen>
     <dimen name="margin_button">8dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin_edit_field">50dp</dimen>
+    <dimen name="pading_title">8dp</dimen>
+    <dimen name="padding2nd_line">5dp</dimen>
+    <dimen name="text2nd_line">20sp</dimen>
 </resources>
