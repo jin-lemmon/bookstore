@@ -92,57 +92,6 @@ public class BookstoreActivity extends AppCompatActivity implements LoaderManage
     }
 
 
-    /**
-     * private void shelfInfo() {
-     * SQLiteDatabase db = mDbHelper.getReadableDatabase();
-     * String[] projection = {BookEntry._ID,
-     * BookEntry.COLUMN_BOOK_PRODUCT_NAME,
-     * BookEntry.COLUMN_BOOK_PRICE,
-     * BookEntry.COLUMN_BOOK_QUANTITY,
-     * BookEntry.COLUMN_BOOK_SUPPLIER,
-     * BookEntry.COLUMN_BOOK_SUPPLIER_PHONE};
-     * Cursor cursor = db.query(BookEntry.TABLE_NAME,
-     * projection,
-     * null,
-     * null,
-     * null,
-     * null,
-     * null);
-     * try {
-     * ListView mInventory = findViewById(R.id.inventory);
-     * mInventory.setText("the shelf contains " + cursor.getCount() + "titles\n\n");
-     * mInventory.append(BookEntry._ID + " - "
-     * + BookEntry.COLUMN_BOOK_PRODUCT_NAME + " - "
-     * + BookEntry.COLUMN_BOOK_PRICE + " - "
-     * + BookEntry.COLUMN_BOOK_QUANTITY + " - "
-     * + BookEntry.COLUMN_BOOK_SUPPLIER + " - "
-     * + BookEntry.COLUMN_BOOK_SUPPLIER_PHONE + "\n");
-     * int idColumnIndex = cursor.getColumnIndex(BookEntry._ID);
-     * int productNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRODUCT_NAME);
-     * int priceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
-     * int quantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
-     * int supplierNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER);
-     * int supplierPhoneColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE);
-     * while (cursor.moveToNext()) {
-     * int currentID = cursor.getInt(idColumnIndex);
-     * String currentProductName = cursor.getString(productNameColumnIndex);
-     * int currentQuantity = cursor.getInt(quantityColumnIndex);
-     * int currentPrice = cursor.getInt(priceColumnIndex);
-     * String currentSupplierName = cursor.getString(supplierNameColumnIndex);
-     * String currentSupplierPhone = cursor.getString(supplierPhoneColumnIndex);
-     * mInventory.append(("\n" + currentID +
-     * " - " + currentProductName +
-     * " - " + currentQuantity +
-     * " - " + currentPrice +
-     * " - " + currentSupplierName +
-     * " - " + currentSupplierPhone));
-     * }
-     * } finally {
-     * cursor.close();
-     * }
-     * }
-     */
-
     private void insertMummyData() {
         ContentValues values = new ContentValues();
         values.put(BookEntry.COLUMN_BOOK_PRODUCT_NAME, "The Mummy");

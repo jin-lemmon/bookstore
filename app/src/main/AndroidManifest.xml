@@ -19,7 +19,15 @@
         <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme">
+        <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".BookstoreActivity" />
+        </activity>
+        <provider
+            android:name=".data.BookProvider"
+            android:authorities="com.example.android.bookstore"
+            android:exported="false" />
     </application>
 
 </manifest>

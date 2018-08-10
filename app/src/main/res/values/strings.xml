@@ -13,10 +13,10 @@
     <string name="fahrenheit_451">Delete all books</string>
     <string name="insert_the_mummy_data">Insert The Mummy data</string>
     <string name="sell">SELL</string>
-    <string name="priceTextView">Price :</string>
-    <string name="euros">€</string>
-    <string name="we_have">we have</string>
-    <string name="in_store">in store</string>
+    <string name="priceTextView">Price : </string>
+    <string name="euros"> €</string>
+    <string name="we_have">we have </string>
+    <string name="in_store"> in store</string>
     <string name="dont_have">we don\'t have in store</string>
     <string name="consolidate_book">Consolidate book</string>
     <string name="Detail_add_book">Add a new Book</string>
