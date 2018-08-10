@@ -7,7 +7,6 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,9 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.android.bookstore.data.BookContract.BookEntry;
 import com.example.android.bookstore.data.BookDbHelper;
@@ -27,8 +24,9 @@ import com.example.android.bookstore.data.BookDbHelper;
 public class BookstoreActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private BookDbHelper mDbHelper;
-    private BookCursorAdapter mCursorAdapter
+    private BookCursorAdapter mCursorAdapter;
     private static final int BOOK_STORE_LOADER = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +35,10 @@ public class BookstoreActivity extends AppCompatActivity implements LoaderManage
         insertBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BookstoreActivity.this,DetailActivity.class);
+                Intent intent = new Intent(BookstoreActivity.this, DetailActivity.class);
                 startActivity(intent);
             }
-        }) ;
+        });
         ListView bookListView = (ListView) findViewById(R.id.inventory);
 
         // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
@@ -63,6 +61,7 @@ public class BookstoreActivity extends AppCompatActivity implements LoaderManage
         });
         getLoaderManager().initLoader(BOOK_STORE_LOADER, null, this);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu options from the res/menu/menu_catalog.xml file.
@@ -70,6 +69,7 @@ public class BookstoreActivity extends AppCompatActivity implements LoaderManage
         getMenuInflater().inflate(R.menu.menu_bookstore, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // User clicked on a menu option in the app bar overflow menu
@@ -89,57 +89,60 @@ public class BookstoreActivity extends AppCompatActivity implements LoaderManage
 
     protected void onStart() {
         super.onStart();
-            }
-
-
-    private void shelfInfo() {
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-        String[] projection = {BookEntry._ID,
-                BookEntry.COLUMN_BOOK_PRODUCT_NAME,
-                BookEntry.COLUMN_BOOK_PRICE,
-                BookEntry.COLUMN_BOOK_QUANTITY,
-                BookEntry.COLUMN_BOOK_SUPPLIER,
-                BookEntry.COLUMN_BOOK_SUPPLIER_PHONE};
-        Cursor cursor = db.query(BookEntry.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                null);
-        try {
-            ListView mInventory = findViewById(R.id.inventory);
-            mInventory.setText("the shelf contains " + cursor.getCount() + "titles\n\n");
-            mInventory.append(BookEntry._ID + " - "
-                    + BookEntry.COLUMN_BOOK_PRODUCT_NAME + " - "
-                    + BookEntry.COLUMN_BOOK_PRICE + " - "
-                    + BookEntry.COLUMN_BOOK_QUANTITY + " - "
-                    + BookEntry.COLUMN_BOOK_SUPPLIER + " - "
-                    + BookEntry.COLUMN_BOOK_SUPPLIER_PHONE + "\n");
-            int idColumnIndex = cursor.getColumnIndex(BookEntry._ID);
-            int productNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRODUCT_NAME);
-            int priceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
-            int quantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
-            int supplierNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER);
-            int supplierPhoneColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE);
-            while (cursor.moveToNext()) {
-                int currentID = cursor.getInt(idColumnIndex);
-                String currentProductName = cursor.getString(productNameColumnIndex);
-                int currentQuantity = cursor.getInt(quantityColumnIndex);
-                int currentPrice = cursor.getInt(priceColumnIndex);
-                String currentSupplierName = cursor.getString(supplierNameColumnIndex);
-                String currentSupplierPhone = cursor.getString(supplierPhoneColumnIndex);
-                mInventory.append(("\n" + currentID +
-                        " - " + currentProductName +
-                        " - " + currentQuantity +
-                        " - " + currentPrice +
-                        " - " + currentSupplierName +
-                        " - " + currentSupplierPhone));
-            }
-        } finally {
-            cursor.close();
-        }
     }
+
+
+    /**
+     * private void shelfInfo() {
+     * SQLiteDatabase db = mDbHelper.getReadableDatabase();
+     * String[] projection = {BookEntry._ID,
+     * BookEntry.COLUMN_BOOK_PRODUCT_NAME,
+     * BookEntry.COLUMN_BOOK_PRICE,
+     * BookEntry.COLUMN_BOOK_QUANTITY,
+     * BookEntry.COLUMN_BOOK_SUPPLIER,
+     * BookEntry.COLUMN_BOOK_SUPPLIER_PHONE};
+     * Cursor cursor = db.query(BookEntry.TABLE_NAME,
+     * projection,
+     * null,
+     * null,
+     * null,
+     * null,
+     * null);
+     * try {
+     * ListView mInventory = findViewById(R.id.inventory);
+     * mInventory.setText("the shelf contains " + cursor.getCount() + "titles\n\n");
+     * mInventory.append(BookEntry._ID + " - "
+     * + BookEntry.COLUMN_BOOK_PRODUCT_NAME + " - "
+     * + BookEntry.COLUMN_BOOK_PRICE + " - "
+     * + BookEntry.COLUMN_BOOK_QUANTITY + " - "
+     * + BookEntry.COLUMN_BOOK_SUPPLIER + " - "
+     * + BookEntry.COLUMN_BOOK_SUPPLIER_PHONE + "\n");
+     * int idColumnIndex = cursor.getColumnIndex(BookEntry._ID);
+     * int productNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRODUCT_NAME);
+     * int priceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
+     * int quantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
+     * int supplierNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER);
+     * int supplierPhoneColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE);
+     * while (cursor.moveToNext()) {
+     * int currentID = cursor.getInt(idColumnIndex);
+     * String currentProductName = cursor.getString(productNameColumnIndex);
+     * int currentQuantity = cursor.getInt(quantityColumnIndex);
+     * int currentPrice = cursor.getInt(priceColumnIndex);
+     * String currentSupplierName = cursor.getString(supplierNameColumnIndex);
+     * String currentSupplierPhone = cursor.getString(supplierPhoneColumnIndex);
+     * mInventory.append(("\n" + currentID +
+     * " - " + currentProductName +
+     * " - " + currentQuantity +
+     * " - " + currentPrice +
+     * " - " + currentSupplierName +
+     * " - " + currentSupplierPhone));
+     * }
+     * } finally {
+     * cursor.close();
+     * }
+     * }
+     */
+
     private void insertMummyData() {
         ContentValues values = new ContentValues();
         values.put(BookEntry.COLUMN_BOOK_PRODUCT_NAME, "The Mummy");
@@ -150,6 +153,7 @@ public class BookstoreActivity extends AppCompatActivity implements LoaderManage
 // Insert the new row, returning the primary key value of the new row
         Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
     }
+
     private void fahreneit451() {
         int rowsDeleted = getContentResolver().delete(BookEntry.CONTENT_URI, null, null);
         Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
@@ -160,7 +164,7 @@ public class BookstoreActivity extends AppCompatActivity implements LoaderManage
         String[] projection = {BookEntry._ID,
                 BookEntry.COLUMN_BOOK_PRODUCT_NAME,
                 BookEntry.COLUMN_BOOK_PRICE,
-        BookEntry.COLUMN_BOOK_QUANTITY};
+                BookEntry.COLUMN_BOOK_QUANTITY};
 
         return new CursorLoader(BookstoreActivity.this, BookEntry.CONTENT_URI,
                 projection, null, null, null);

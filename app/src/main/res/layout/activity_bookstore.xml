@@ -23,7 +23,6 @@
         android:id="@+id/inventory"
         style="@style/normal"
         android:layout_below="@id/insert_book"
-        android:layout_weight="5"
         android:background="@color/listViewColor"
         android:textColor="@android:color/white" />
 
@@ -42,7 +41,6 @@
           android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif-medium"
             android:paddingTop="16dp"
-            android:text="@string/empty_view_title_text"
             android:textAppearance="?android:textAppearanceMedium" />
 
         <TextView
@@ -53,8 +51,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:paddingTop="8dp"
-            android:text="@string/empty_view_subtitle_text"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="#A2AAB0" />
     </RelativeLayout>
-</>
+</RelativeLayout>

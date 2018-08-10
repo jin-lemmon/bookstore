@@ -32,9 +32,9 @@ public class BookProvider extends ContentProvider {
         sUriMatcher.addURI(BookContract.CONTENT_AUTHORITY, BookContract.PATH_BOOKS + "/#", BOOK_ID);
     }
 
-    @Nullable
+
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection,String[] selectionArgs, String sortOrder) {
             SQLiteDatabase database = mDbHelper.getReadableDatabase();
             Cursor cursor;
             int match = sUriMatcher.match(uri);
@@ -56,7 +56,7 @@ public class BookProvider extends ContentProvider {
             return cursor;
     }
 
-    @Nullable
+
     @Override
     public String getType(@NonNull Uri uri) {
         final int match = sUriMatcher.match(uri);
@@ -70,9 +70,9 @@ public class BookProvider extends ContentProvider {
         }
     }
 
-    @Nullable
+
     @Override
-    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
+    public Uri insert(@NonNull Uri uri, ContentValues values) {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case BOOKS:
@@ -107,7 +107,7 @@ public class BookProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         int rowsDeleted;
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
@@ -134,7 +134,7 @@ public class BookProvider extends ContentProvider {
     }
 
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
+    public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         if (values.containsKey(BookEntry.COLUMN_BOOK_PRODUCT_NAME)) {
             String name = values.getAsString(BookEntry.COLUMN_BOOK_PRODUCT_NAME);
             if (name == null) {

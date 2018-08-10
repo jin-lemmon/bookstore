@@ -18,5 +18,11 @@
     <string name="we_have">we have</string>
     <string name="in_store">in store</string>
     <string name="dont_have">we don\'t have in store</string>
-
+    <string name="consolidate_book">Consolidate book</string>
+    <string name="Detail_add_book">Add a new Book</string>
+    <string name="Detail_edit_book">Edit an existing Book</string>
+    <string name="insert_book_failed">insert book failed</string>
+    <string name="insert_book_success">insert book success</string>
+    <string name="update_book_failed">update book failed</string>
+    <string name="update_book_success">update book success</string>
 </resources>

@@ -23,8 +23,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/quantityText"
@@ -36,19 +35,19 @@
             android:id="@+id/quantity"
             style="@style/quantityStyle"
             android:layout_weight="2"
-        tools:text="20" />
+            tools:text="20" />
 
         <Button
             android:id="@+id/buttonPlus"
             style="@style/quantityStyle"
             android:layout_weight="1"
-            android:text="+"/>
+            android:text="+" />
 
         <Button
             android:id="@+id/buttonMinus"
             style="@style/quantityStyle"
             android:layout_weight="1"
-            android:text="-"/>
+            android:text="-" />
 
 
     </LinearLayout>
@@ -67,11 +66,11 @@
         android:inputType="phone" />
 
     <Button
-android:id="@+id/validate_book"
+        android:id="@+id/validate_book"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/padding"
         android:background="@color/listViewColor"
-        android:text="Consolidate book" />
+        android:text="@string/consolidate_book" />
 
 </LinearLayout>
