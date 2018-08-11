@@ -106,101 +106,101 @@ public class DetailActivity extends AppCompatActivity implements
     }
 
     private void validateBook() {
-
         String bookName = mNameEditText.getText().toString().trim();
         String bookSupplierPhone = mSupplierPhoneEditText.getText().toString().trim();
         String bookSupplier = mSupplierNameEditText.getText().toString().trim();
         String bookPrice = mPriceEditText.getText().toString().trim();
         long price = 0;
         if (!TextUtils.isEmpty(bookPrice)) {
-            price = Long.parseLong(mPriceEditText.getText().toString().trim());}
-            BookDbHelper mDbHelper = new BookDbHelper(this);
-            SQLiteDatabase db = mDbHelper.getWritableDatabase();
-            ContentValues values = new ContentValues();
-            values.put(BookEntry.COLUMN_BOOK_PRODUCT_NAME, bookName);
-            values.put(BookEntry.COLUMN_BOOK_PRICE, price);
-            values.put(BookEntry.COLUMN_BOOK_QUANTITY, mQuantity);
-            values.put(BookEntry.COLUMN_BOOK_SUPPLIER, bookSupplier);
-            values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE, bookSupplierPhone);
-            db.insert(BookEntry.TABLE_NAME, null, values);
+            price = Long.parseLong(mPriceEditText.getText().toString().trim());
+        }
+        BookDbHelper mDbHelper = new BookDbHelper(this);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(BookEntry.COLUMN_BOOK_PRODUCT_NAME, bookName);
+        values.put(BookEntry.COLUMN_BOOK_PRICE, price);
+        values.put(BookEntry.COLUMN_BOOK_QUANTITY, mQuantity);
+        values.put(BookEntry.COLUMN_BOOK_SUPPLIER, bookSupplier);
+        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE, bookSupplierPhone);
         if (mCurrentBookUri == null &&
-                TextUtils.isEmpty(bookName) && TextUtils.isEmpty(bookPrice) &&
-                TextUtils.isEmpty(bookSupplier) && TextUtils.isEmpty(bookSupplierPhone) ) {
+                TextUtils.isEmpty(bookName) || TextUtils.isEmpty(bookPrice)) {
+            Toast.makeText(this, getString(R.string.missing_fields),
+                    Toast.LENGTH_SHORT).show();
+        }else{
+        if (mCurrentBookUri == null) {
+            // This is a NEW book, so insert a new book into the provider,
+            // returning the content URI for the new book.
+            Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
+
+            // Show a toast message depending on whether or not the insertion was successful.
+            if (newUri == null) {
+                // If the new content URI is null, then there was an error with insertion.
+                Toast.makeText(this, getString(R.string.insert_book_failed),
+                        Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                // Otherwise, the insertion was successful and we can display a toast.
+                Toast.makeText(this, R.string.insert_book_success,
+                        Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        } else {
+            int rowsAffected = getContentResolver().update(mCurrentBookUri, values, null, null);
+
+            // Show a toast message depending on whether or not the update was successful.
+            if (rowsAffected == 0) {
+                // If no rows were affected, then there was an error with the update.
+                Toast.makeText(this, getString(R.string.update_book_failed),
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // Otherwise, the update was successful and we can display a toast.
+                Toast.makeText(this, getString(R.string.update_book_success),
+                        Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }}
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String[] projection = {BookEntry._ID,
+                BookEntry.COLUMN_BOOK_PRODUCT_NAME,
+                BookEntry.COLUMN_BOOK_PRICE,
+                BookEntry.COLUMN_BOOK_QUANTITY,
+                BookEntry.COLUMN_BOOK_SUPPLIER, BookEntry.COLUMN_BOOK_SUPPLIER_PHONE};
+
+        return new CursorLoader(DetailActivity.this, BookEntry.CONTENT_URI,
+                projection, null, null, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        if (cursor == null || cursor.getCount() < 1) {
             return;
         }
-        if (mCurrentBookUri == null) {
-                // This is a NEW book, so insert a new book into the provider,
-                // returning the content URI for the new book.
-                Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
-
-                // Show a toast message depending on whether or not the insertion was successful.
-                if (newUri == null) {
-                    // If the new content URI is null, then there was an error with insertion.
-                    Toast.makeText(this, getString(R.string.insert_book_failed),
-                            Toast.LENGTH_SHORT).show();
-                    finish();
-                } else {
-                    // Otherwise, the insertion was successful and we can display a toast.
-                    Toast.makeText(this, R.string.insert_book_success,
-                            Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                int rowsAffected = getContentResolver().update(mCurrentBookUri, values, null, null);
-
-                // Show a toast message depending on whether or not the update was successful.
-                if (rowsAffected == 0) {
-                    // If no rows were affected, then there was an error with the update.
-                    Toast.makeText(this, getString(R.string.update_book_failed),
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    // Otherwise, the update was successful and we can display a toast.
-                    Toast.makeText(this, getString(R.string.update_book_success),
-                            Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }
-        }
-
-        @Override
-        public Loader<Cursor> onCreateLoader ( int id, Bundle args){
-            String[] projection = {BookEntry._ID,
-                    BookEntry.COLUMN_BOOK_PRODUCT_NAME,
-                    BookEntry.COLUMN_BOOK_PRICE,
-                    BookEntry.COLUMN_BOOK_QUANTITY,
-                    BookEntry.COLUMN_BOOK_SUPPLIER, BookEntry.COLUMN_BOOK_SUPPLIER_PHONE};
-
-            return new CursorLoader(DetailActivity.this, BookEntry.CONTENT_URI,
-                    projection, null, null, null);
-        }
-
-        @Override
-        public void onLoadFinished (Loader < Cursor > loader, Cursor cursor){
-            if (cursor == null || cursor.getCount() < 1) {
-                return;
-            }
-            if (cursor.moveToFirst()) {
-                int nameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRODUCT_NAME);
-                int priceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
-                int quantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
-                int supplierColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER);
-                int phoneColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE);
-                String name = cursor.getString(nameColumnIndex);
-                String supplier = cursor.getString(supplierColumnIndex);
-                String phone = cursor.getString(phoneColumnIndex);
-                long price = cursor.getLong(priceColumnIndex);
-                int quantity = cursor.getInt(quantityColumnIndex);
-                mNameEditText.setText(name);
-                mPriceEditText.setText(String.valueOf(price));
-                mQuantityTextView.setText(String.valueOf(quantity));
-                mSupplierNameEditText.setText(supplier);
-                mSupplierPhoneEditText.setText(phone);
-            }
-        }
-
-        @Override
-        public void onLoaderReset (Loader < Cursor > loader) {
-            eraseText();
+        if (cursor.moveToFirst()) {
+            int nameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRODUCT_NAME);
+            int priceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
+            int quantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
+            int supplierColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER);
+            int phoneColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE);
+            String name = cursor.getString(nameColumnIndex);
+            String supplier = cursor.getString(supplierColumnIndex);
+            String phone = cursor.getString(phoneColumnIndex);
+            long price = cursor.getLong(priceColumnIndex);
+            int quantity = cursor.getInt(quantityColumnIndex);
+            mNameEditText.setText(name);
+            mPriceEditText.setText(String.valueOf(price));
+            mQuantityTextView.setText(String.valueOf(quantity));
+            mSupplierNameEditText.setText(supplier);
+            mSupplierPhoneEditText.setText(phone);
         }
     }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        eraseText();
+    }
+}
 
 

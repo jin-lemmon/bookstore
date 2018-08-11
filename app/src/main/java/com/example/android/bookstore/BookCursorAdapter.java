@@ -13,6 +13,11 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.bookstore.data.BookContract;
+
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import static com.example.android.bookstore.data.BookContract.BookEntry.COLUMN_BOOK_PRICE;
 import static com.example.android.bookstore.data.BookContract.BookEntry.COLUMN_BOOK_PRODUCT_NAME;
 import static com.example.android.bookstore.data.BookContract.BookEntry.COLUMN_BOOK_QUANTITY;
@@ -63,28 +68,26 @@ public class BookCursorAdapter extends CursorAdapter {
         sell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bookQuantity > 0) {
-                    int newQuantity = bookQuantity - 1;
-                    Uri quantityUri = ContentUris.withAppendedId(CONTENT_URI, bookId);
-                    ContentValues values = new ContentValues();
-                    values.put(COLUMN_BOOK_QUANTITY, newQuantity);
+                Uri currentBookUri = ContentUris.withAppendedId(BookContract.BookEntry.CONTENT_URI, bookId);
+                ContentValues values = new ContentValues();
 
-                    int rowUpdated = context.getContentResolver().update(quantityUri, values, null, null);
-                    if (!(rowUpdated > 0)) {
-                        Toast.makeText(context, R.string.sale_error, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, R.string.book_sold, Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(context, R.string.re_stock, Toast.LENGTH_SHORT).show();
+                int updatedQuantity;
+                if (bookQuantity >0){
+                    updatedQuantity = bookQuantity-1;
+                }else{
+                    updatedQuantity = bookQuantity;
                 }
+                values.put(BookContract.BookEntry.COLUMN_BOOK_QUANTITY, updatedQuantity);
+                String selection = BookContract.BookEntry._ID + "=?";
+                String[] selectionArgs = new String[] {String.valueOf(bookId)};
+                int updatedRows = context.getContentResolver().update(currentBookUri, values, selection, selectionArgs);
+                Toast.makeText(context, "quantity updated:" + updatedQuantity + ". Rows updated = " + updatedRows, Toast.LENGTH_SHORT).show();
             }
-        });
-        // Extract properties from cursor
+            });
+//
         String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_PRODUCT_NAME));
-        String priceIs = context.getString(R.string.priceTextView);
-        String price = String.format(priceIs, cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_BOOK_PRICE)));
-        String quantity = context.getString(R.string.we_have) + " " + cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_QUANTITY)) + " " + context.getString(R.string.in_store);
+        String price =String.format(context.getString(R.string.priceTextView), cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_BOOK_PRICE)));
+        String quantity = String.format(context.getString(R.string.we_have) ,cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_BOOK_QUANTITY)));
         if (cursor.getColumnIndexOrThrow(COLUMN_BOOK_QUANTITY) == 0) {
             quantity = context.getString(R.string.don_t_have);
         }

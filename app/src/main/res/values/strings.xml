@@ -13,10 +13,8 @@
     <string name="fahrenheit_451">Delete all books</string>
     <string name="insert_the_mummy_data">Insert The Mummy data</string>
     <string name="sell">SELL</string>
-    <string name="priceTextView">Price : % €</string>
-    <string name="euros"> €</string>
+    <string name="priceTextView">Price : %d €</string>
     <string name="we_have">We have %d in store</string>
-    <string name="in_store"> in store</string>
     <string name="don_t_have">We don\'t have in store</string>
     <string name="consolidate_book">Consolidate book</string>
     <string name="Detail_add_book">Add a new Book</string>
@@ -28,4 +26,7 @@
     <string name="re_stock">We can\'t sell until re-stock</string>
     <string name="book_sold">Book sold</string>
     <string name="sale_error">Error while proceeding</string>
+    <string name="there_s_no_book_here">There\'s no book here</string>
+    <string name="let_s_insert_some">let\'s insert some!</string>
+    <string name="missing_fields">missing fields</string>
 </resources>
