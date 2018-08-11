@@ -39,6 +39,7 @@
 
     <Button
         android:id="@+id/sell_button"
+        android:focusable="false"
         style="@style/list_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

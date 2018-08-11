@@ -7,9 +7,7 @@
     android:orientation="vertical"
     tools:context=".BookstoreActivity">
 
-
     <Button
-
         android:id="@+id/insert_book"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +16,6 @@
         android:text="@string/insert_book"
         android:textSize="30sp" />
 
-
     <ListView
         android:id="@+id/inventory"
         style="@style/normal"
@@ -26,13 +23,11 @@
         android:background="@color/listViewColor"
         android:textColor="@android:color/white" />
 
-
     <RelativeLayout
         android:id="@+id/empty_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
-
 
         <TextView
             android:text="@string/there_s_no_book_here"
