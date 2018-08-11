@@ -1,14 +1,23 @@
 package com.example.android.bookstore;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.android.bookstore.data.BookContract.BookEntry;
+import static com.example.android.bookstore.data.BookContract.BookEntry.COLUMN_BOOK_PRICE;
+import static com.example.android.bookstore.data.BookContract.BookEntry.COLUMN_BOOK_PRODUCT_NAME;
+import static com.example.android.bookstore.data.BookContract.BookEntry.COLUMN_BOOK_QUANTITY;
+import static com.example.android.bookstore.data.BookContract.BookEntry.CONTENT_URI;
+import static com.example.android.bookstore.data.BookContract.BookEntry._ID;
 
 
 public class BookCursorAdapter extends CursorAdapter {
@@ -44,18 +53,40 @@ public class BookCursorAdapter extends CursorAdapter {
      *                correct row.
      */
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, Cursor cursor) {
+        final int bookQuantity = cursor.getInt(cursor.getColumnIndex(COLUMN_BOOK_QUANTITY));
+        final int bookId = cursor.getInt(cursor.getColumnIndex(_ID));
         TextView bookNameTextView = view.findViewById(R.id.book_name);
         TextView priceTextView = view.findViewById(R.id.book_price);
         TextView quantityTextView = view.findViewById(R.id.book_quantity);
+        Button sell = view.findViewById(R.id.sell_button);
+        sell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bookQuantity > 0) {
+                    int newQuantity = bookQuantity - 1;
+                    Uri quantityUri = ContentUris.withAppendedId(CONTENT_URI, bookId);
+                    ContentValues values = new ContentValues();
+                    values.put(COLUMN_BOOK_QUANTITY, newQuantity);
 
+                    int rowUpdated = context.getContentResolver().update(quantityUri, values, null, null);
+                    if (!(rowUpdated > 0)) {
+                        Toast.makeText(context, R.string.sale_error, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, R.string.book_sold, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(context, R.string.re_stock, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         // Extract properties from cursor
-        String name = cursor.getString(cursor.getColumnIndexOrThrow(BookEntry.COLUMN_BOOK_PRODUCT_NAME));
-        String price = context.getString(R.string.priceTextView) + cursor.getString(cursor.getColumnIndexOrThrow(BookEntry.COLUMN_BOOK_PRICE)) + context.getString(R.string.euros);
-        String quantity = context.getString(R.string.we_have) + cursor.getString(cursor.getColumnIndexOrThrow(BookEntry.COLUMN_BOOK_QUANTITY)) + context.getString(R.string.in_store);
-
-        if (cursor.getColumnIndexOrThrow(BookEntry.COLUMN_BOOK_QUANTITY) == 0) {
-            quantity = context.getString(R.string.dont_have);
+        String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_PRODUCT_NAME));
+        String priceIs = context.getString(R.string.priceTextView);
+        String price = String.format(priceIs, cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_BOOK_PRICE)));
+        String quantity = context.getString(R.string.we_have) + " " + cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_QUANTITY)) + " " + context.getString(R.string.in_store);
+        if (cursor.getColumnIndexOrThrow(COLUMN_BOOK_QUANTITY) == 0) {
+            quantity = context.getString(R.string.don_t_have);
         }
         // Populate fields with extracted properties
         bookNameTextView.setText(name);

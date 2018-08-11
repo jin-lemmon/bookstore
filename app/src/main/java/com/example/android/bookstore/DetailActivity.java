@@ -138,6 +138,7 @@ public class DetailActivity extends AppCompatActivity implements
                     // If the new content URI is null, then there was an error with insertion.
                     Toast.makeText(this, getString(R.string.insert_book_failed),
                             Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
                     // Otherwise, the insertion was successful and we can display a toast.
                     Toast.makeText(this, R.string.insert_book_success,
@@ -155,6 +156,7 @@ public class DetailActivity extends AppCompatActivity implements
                     // Otherwise, the update was successful and we can display a toast.
                     Toast.makeText(this, getString(R.string.update_book_success),
                             Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         }
