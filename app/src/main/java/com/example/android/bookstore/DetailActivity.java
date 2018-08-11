@@ -169,7 +169,7 @@ public class DetailActivity extends AppCompatActivity implements
                 BookEntry.COLUMN_BOOK_QUANTITY,
                 BookEntry.COLUMN_BOOK_SUPPLIER, BookEntry.COLUMN_BOOK_SUPPLIER_PHONE};
 
-        return new CursorLoader(DetailActivity.this, BookEntry.CONTENT_URI,
+        return new CursorLoader(DetailActivity.this, mCurrentBookUri,
                 projection, null, null, null);
     }
 
