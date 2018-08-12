@@ -43,8 +43,7 @@ public class DetailActivity extends AppCompatActivity implements
         mCurrentBookUri = intent.getData();
         if (mCurrentBookUri == null) {
             setTitle(getString(R.string.Detail_add_book));
-            invalidateOptionsMenu();
-        } else {
+                    } else {
             setTitle(getString(R.string.Detail_edit_book));
             getLoaderManager().initLoader(EXISTING_BOOK_LOADER, null, this);
         }
@@ -124,7 +123,7 @@ public class DetailActivity extends AppCompatActivity implements
     }
 
     private void quantityMinus() {
-        if (mQuantity > 0) {
+        if (mQuantity > 1) {
             mQuantity -= 1;
             updateQuantity();
         }
@@ -160,7 +159,7 @@ public class DetailActivity extends AppCompatActivity implements
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER, bookSupplier);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE, bookSupplierPhone);
         if (mCurrentBookUri == null &&
-                TextUtils.isEmpty(bookName) || TextUtils.isEmpty(bookPrice)) {
+                TextUtils.isEmpty(bookName) || TextUtils.isEmpty(bookPrice) || mQuantity < 1) {
             Toast.makeText(this, getString(R.string.missing_fields),
                     Toast.LENGTH_SHORT).show();
         } else {
