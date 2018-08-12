@@ -1,8 +1,10 @@
 package com.example.android.bookstore;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -14,6 +16,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,7 +82,52 @@ public class DetailActivity extends AppCompatActivity implements
                 quantityPlus();
             }
         });
+        Button delete = findViewById(R.id.delete_button);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteBook();
+            }
+        });
+        final ImageButton callSupplier = findViewById(R.id.call_supplier);
+        callSupplier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callSupplierPhone();
+            }
+        });
     }
+
+    private void callSupplierPhone() {
+        Uri supp_phone = Uri.parse("tel:" + mSupplierPhoneEditText.getText());
+        Intent intent = new Intent(Intent.ACTION_DIAL, supp_phone);
+        startActivity(intent);
+    }
+
+    private void deleteBook() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_this_book);
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (mCurrentBookUri != null) {
+                    int rowsAffected = getContentResolver().delete(mCurrentBookUri, null, null);
+                }
+                finish();
+            }
+        });
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
+
+
 
     private void quantityPlus() {
         mQuantity += 1;
@@ -126,39 +174,40 @@ public class DetailActivity extends AppCompatActivity implements
                 TextUtils.isEmpty(bookName) || TextUtils.isEmpty(bookPrice)) {
             Toast.makeText(this, getString(R.string.missing_fields),
                     Toast.LENGTH_SHORT).show();
-        }else{
-        if (mCurrentBookUri == null) {
-            // This is a NEW book, so insert a new book into the provider,
-            // returning the content URI for the new book.
-            Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
-
-            // Show a toast message depending on whether or not the insertion was successful.
-            if (newUri == null) {
-                // If the new content URI is null, then there was an error with insertion.
-                Toast.makeText(this, getString(R.string.insert_book_failed),
-                        Toast.LENGTH_SHORT).show();
-                finish();
-            } else {
-                // Otherwise, the insertion was successful and we can display a toast.
-                Toast.makeText(this, R.string.insert_book_success,
-                        Toast.LENGTH_SHORT).show();
-                finish();
-            }
         } else {
-            int rowsAffected = getContentResolver().update(mCurrentBookUri, values, null, null);
+            if (mCurrentBookUri == null) {
+                // This is a NEW book, so insert a new book into the provider,
+                // returning the content URI for the new book.
+                Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
 
-            // Show a toast message depending on whether or not the update was successful.
-            if (rowsAffected == 0) {
-                // If no rows were affected, then there was an error with the update.
-                Toast.makeText(this, getString(R.string.update_book_failed),
-                        Toast.LENGTH_SHORT).show();
+                // Show a toast message depending on whether or not the insertion was successful.
+                if (newUri == null) {
+                    // If the new content URI is null, then there was an error with insertion.
+                    Toast.makeText(this, getString(R.string.insert_book_failed),
+                            Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    // Otherwise, the insertion was successful and we can display a toast.
+                    Toast.makeText(this, R.string.insert_book_success,
+                            Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             } else {
-                // Otherwise, the update was successful and we can display a toast.
-                Toast.makeText(this, getString(R.string.update_book_success),
-                        Toast.LENGTH_SHORT).show();
-                finish();
+                int rowsAffected = getContentResolver().update(mCurrentBookUri, values, null, null);
+
+                // Show a toast message depending on whether or not the update was successful.
+                if (rowsAffected == 0) {
+                    // If no rows were affected, then there was an error with the update.
+                    Toast.makeText(this, getString(R.string.update_book_failed),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    // Otherwise, the update was successful and we can display a toast.
+                    Toast.makeText(this, getString(R.string.update_book_success),
+                            Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
-        }}
+        }
     }
 
     @Override

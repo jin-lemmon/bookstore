@@ -1,76 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:orientation="vertical"
-    tools:context=".DetailActivity">
-
-    <EditText
-        android:id="@+id/product_name"
-        style="@style/detailActivityStyle"
-        android:layout_marginTop="50dp"
-        android:hint="@string/product_name"
-        android:inputType="text" />
-
-    <EditText
-        android:id="@+id/price"
-        style="@style/detailActivityStyle"
-        android:hint="@string/price"
-        android:inputType="numberDecimal" />
+    android:background="@color/background">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/quantityText"
-            style="@style/quantityStyle"
-            android:layout_weight="3"
-            android:hint="@string/quantity" />
-
-        <TextView
-            android:id="@+id/quantity"
-            style="@style/quantityStyle"
-            android:layout_weight="2"
-            tools:text="20" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".DetailActivity">
 
         <Button
-            android:id="@+id/buttonPlus"
-            style="@style/quantityStyle"
-            android:layout_weight="1"
-            android:text="+" />
+            android:id="@+id/delete_button"
+            style="@style/detailActivityButton"
+            android:layout_marginTop="@dimen/margin_delete_button"
+            android:text="@string/delete_book" />
+
+        <EditText
+            android:id="@+id/product_name"
+            style="@style/detailActivityStyle"
+            android:layout_marginTop="50dp"
+            android:hint="@string/product_name"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/price"
+            style="@style/detailActivityStyle"
+            android:hint="@string/price"
+            android:inputType="numberDecimal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/quantityText"
+                style="@style/quantityStyle"
+                android:layout_weight="3"
+                android:hint="@string/quantity" />
+
+            <TextView
+                android:id="@+id/quantity"
+                style="@style/quantityStyle"
+                android:layout_weight="2"
+                tools:text="20" />
+
+            <Button
+                android:id="@+id/buttonPlus"
+                style="@style/quantityStyle"
+                android:layout_weight="1"
+                android:text="+" />
+
+            <Button
+                android:id="@+id/buttonMinus"
+                style="@style/quantityStyle"
+                android:layout_weight="1"
+                android:text="-" />
+
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/supplier_name"
+            style="@style/detailActivityStyle"
+            android:hint="@string/supplier_name"
+            android:inputType="text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/margin_edit_field">
+
+            <EditText
+                android:id="@+id/supplier_phone"
+                style="@style/supplierPhone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:hint="@string/supplier_phone_number"
+                android:inputType="phone"
+                android:maxLines="1" />
+
+            <ImageButton
+                android:id="@+id/call_supplier"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/supplierPhone"
+                android:layout_marginEnd="@dimen/margin_button"
+                android:layout_weight="1"
+                android:src="@drawable/ic_phone" />
+        </LinearLayout>
 
         <Button
-            android:id="@+id/buttonMinus"
-            style="@style/quantityStyle"
-            android:layout_weight="1"
-            android:text="-" />
-
+            android:id="@+id/validate_book"
+            style="@style/detailActivityButton"
+            android:text="@string/consolidate_book" />
 
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/supplier_name"
-        style="@style/detailActivityStyle"
-        android:hint="@string/supplier_name"
-        android:inputType="text" />
-
-    <EditText
-        android:id="@+id/supplier_phone"
-        style="@style/detailActivityStyle"
-        android:layout_marginBottom="@dimen/margin_edit_field"
-        android:hint="@string/supplier_phone_number"
-        android:inputType="phone" />
-
-    <Button
-        android:id="@+id/validate_book"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding"
-        android:background="@color/listViewColor"
-        android:text="@string/consolidate_book" />
-
-</LinearLayout>
+</ScrollView>

@@ -11,7 +11,7 @@
         style="@style/list_item"
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@id/sell_button"
-        android:paddingTop="@dimen/pading_title"
+        android:paddingTop="@dimen/padding_title"
         android:textSize="25sp"
         tools:text="title" />
 
