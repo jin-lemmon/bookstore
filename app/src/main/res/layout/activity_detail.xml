@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context=".DetailActivity">
 
@@ -51,15 +51,13 @@
                 android:id="@+id/buttonPlus"
                 style="@style/quantityStyle"
                 android:layout_weight="1"
-                android:text="+" />
+                android:text="@string/plus" />
 
             <Button
                 android:id="@+id/buttonMinus"
                 style="@style/quantityStyle"
                 android:layout_weight="1"
-                android:text="-" />
-
-
+                android:text="@string/minus" />
         </LinearLayout>
 
         <EditText
@@ -71,8 +69,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="@dimen/margin_edit_field">
+            android:layout_marginBottom="@dimen/margin_edit_field"
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/supplier_phone"
@@ -86,11 +84,12 @@
 
             <ImageButton
                 android:id="@+id/call_supplier"
+                style="@style/supplierPhone"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                style="@style/supplierPhone"
                 android:layout_marginEnd="@dimen/margin_button"
                 android:layout_weight="1"
+                android:contentDescription="@string/a_phone"
                 android:src="@drawable/ic_phone" />
         </LinearLayout>
 
@@ -98,6 +97,5 @@
             android:id="@+id/validate_book"
             style="@style/detailActivityButton"
             android:text="@string/consolidate_book" />
-
     </LinearLayout>
 </ScrollView>

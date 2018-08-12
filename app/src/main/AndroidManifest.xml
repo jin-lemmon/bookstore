@@ -20,7 +20,7 @@
         <activity
             android:name=".DetailActivity"
             android:parentActivityName=".BookstoreActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/DetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".BookstoreActivity" />

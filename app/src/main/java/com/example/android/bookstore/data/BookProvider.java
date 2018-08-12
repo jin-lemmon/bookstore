@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.android.bookstore.data.BookContract.BookEntry;
@@ -31,7 +30,6 @@ public class BookProvider extends ContentProvider {
         sUriMatcher.addURI(BookContract.CONTENT_AUTHORITY, BookContract.PATH_BOOKS, BOOKS);
         sUriMatcher.addURI(BookContract.CONTENT_AUTHORITY, BookContract.PATH_BOOKS + "/#", BOOK_ID);
     }
-
 
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection,String[] selectionArgs, String sortOrder) {
@@ -56,7 +54,6 @@ public class BookProvider extends ContentProvider {
             return cursor;
     }
 
-
     @Override
     public String getType(@NonNull Uri uri) {
         final int match = sUriMatcher.match(uri);
@@ -70,7 +67,6 @@ public class BookProvider extends ContentProvider {
         }
     }
 
-
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
         final int match = sUriMatcher.match(uri);
@@ -80,7 +76,6 @@ public class BookProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Insertion is not supported for " + uri);
         }
-
     }
     
     private Uri insertBook(Uri uri, ContentValues values) {
@@ -114,12 +109,9 @@ public class BookProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case BOOKS:
-                // Delete all rows that match the selection and selection args
-
                 rowsDeleted = database.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             case BOOK_ID:
-                // Delete a single row given by the ID in the URI
                 selection = BookEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 rowsDeleted = database.delete(BookEntry.TABLE_NAME, selection, selectionArgs);

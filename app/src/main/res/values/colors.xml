@@ -6,4 +6,5 @@
     <color name="background">#263238</color>
     <color name="button">#1de9b6</color>
     <color name="listViewColor">#ff1744</color>
+    <color name="emptyView_SubText">#A2AAB0</color>
 </resources>

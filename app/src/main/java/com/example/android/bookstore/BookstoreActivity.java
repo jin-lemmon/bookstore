@@ -41,7 +41,6 @@ public class BookstoreActivity extends AppCompatActivity implements LoaderManage
             }
         });
         ListView bookListView = findViewById(R.id.inventory);
-
         View emptyView = findViewById(R.id.empty_view);
         bookListView.setEmptyView(emptyView);
         mCursorAdapter = new BookCursorAdapter(this, null);
@@ -60,21 +59,16 @@ public class BookstoreActivity extends AppCompatActivity implements LoaderManage
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu options from the res/menu/menu_catalog.xml file.
-        // This adds menu items to the app bar.
         getMenuInflater().inflate(R.menu.menu_bookstore, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
-            // Respond to a click on the "Insert dummy data" menu option
             case R.id.insert_the_mummy_data:
                 insertMummyData();
                 return true;
-            // Respond to a click on the "Delete all entries" menu option
             case R.id.fahreneit451:
                 fahrenheit451();
                 return true;
@@ -82,11 +76,9 @@ public class BookstoreActivity extends AppCompatActivity implements LoaderManage
         return super.onOptionsItemSelected(item);
     }
 
-
     protected void onStart() {
         super.onStart();
     }
-
 
     private void insertMummyData() {
         ContentValues values = new ContentValues();
@@ -95,7 +87,6 @@ public class BookstoreActivity extends AppCompatActivity implements LoaderManage
         values.put(BookEntry.COLUMN_BOOK_QUANTITY, "27081999");
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER, "Brendan Fraser");
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE, "68669");
-// Insert the new row, returning the primary key value of the new row
         Uri newUri = getContentResolver().insert(CONTENT_URI, values);
     }
 
@@ -110,7 +101,6 @@ public class BookstoreActivity extends AppCompatActivity implements LoaderManage
                 BookEntry.COLUMN_BOOK_PRODUCT_NAME,
                 BookEntry.COLUMN_BOOK_PRICE,
                 BookEntry.COLUMN_BOOK_QUANTITY};
-
         return new CursorLoader(BookstoreActivity.this, BookEntry.CONTENT_URI,
                 projection, null, null, null);
     }

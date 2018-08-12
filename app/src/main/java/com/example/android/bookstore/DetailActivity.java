@@ -42,18 +42,10 @@ public class DetailActivity extends AppCompatActivity implements
         Intent intent = getIntent();
         mCurrentBookUri = intent.getData();
         if (mCurrentBookUri == null) {
-            // This is a new book, so change the app bar to say "Add a book"
             setTitle(getString(R.string.Detail_add_book));
-
-            // Invalidate the options menu, so the "Delete" menu option can be hidden.
-            // (It doesn't make sense to delete a book that hasn't been created yet.)
             invalidateOptionsMenu();
         } else {
-            // Otherwise this is an existing book, so change app bar to say "Edit book"
             setTitle(getString(R.string.Detail_edit_book));
-
-            // Initialize a loader to read the book data from the database
-            // and display the current values in the editor
             getLoaderManager().initLoader(EXISTING_BOOK_LOADER, null, this);
         }
         mNameEditText = findViewById(R.id.product_name);
@@ -124,10 +116,7 @@ public class DetailActivity extends AppCompatActivity implements
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-
     }
-
-
 
     private void quantityPlus() {
         mQuantity += 1;
@@ -176,32 +165,22 @@ public class DetailActivity extends AppCompatActivity implements
                     Toast.LENGTH_SHORT).show();
         } else {
             if (mCurrentBookUri == null) {
-                // This is a NEW book, so insert a new book into the provider,
-                // returning the content URI for the new book.
                 Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
-
-                // Show a toast message depending on whether or not the insertion was successful.
                 if (newUri == null) {
-                    // If the new content URI is null, then there was an error with insertion.
                     Toast.makeText(this, getString(R.string.insert_book_failed),
                             Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    // Otherwise, the insertion was successful and we can display a toast.
                     Toast.makeText(this, R.string.insert_book_success,
                             Toast.LENGTH_SHORT).show();
                     finish();
                 }
             } else {
                 int rowsAffected = getContentResolver().update(mCurrentBookUri, values, null, null);
-
-                // Show a toast message depending on whether or not the update was successful.
                 if (rowsAffected == 0) {
-                    // If no rows were affected, then there was an error with the update.
                     Toast.makeText(this, getString(R.string.update_book_failed),
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    // Otherwise, the update was successful and we can display a toast.
                     Toast.makeText(this, getString(R.string.update_book_success),
                             Toast.LENGTH_SHORT).show();
                     finish();
@@ -217,7 +196,6 @@ public class DetailActivity extends AppCompatActivity implements
                 BookEntry.COLUMN_BOOK_PRICE,
                 BookEntry.COLUMN_BOOK_QUANTITY,
                 BookEntry.COLUMN_BOOK_SUPPLIER, BookEntry.COLUMN_BOOK_SUPPLIER_PHONE};
-
         return new CursorLoader(DetailActivity.this, mCurrentBookUri,
                 projection, null, null, null);
     }
@@ -251,5 +229,3 @@ public class DetailActivity extends AppCompatActivity implements
         eraseText();
     }
 }
-
-
